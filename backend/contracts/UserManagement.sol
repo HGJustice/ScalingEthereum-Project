@@ -50,8 +50,8 @@ contract UserManagement{
         emit userCreated(msg.sender, userName);
     }
 
-    function addCarToUser(string memory countryOrigin, string memory regPlate, string memory carMake, 
-         string memory model, string memory typeOfCar, string memory color, uint year) external 
+    function addCarToUser(string memory _countryOrigin, string memory _regPlate, string memory _carMake, 
+         string memory _model, string memory _typeOfCar, string memory _color, uint _year) external 
     {
         require(users[msg.sender].userCreated, "must create user first");
         currentCarID++;
@@ -60,19 +60,25 @@ contract UserManagement{
         Car memory newCar = Car (
             currentCarID,
             currentUser,
-            countryOrigin,
-            regPlate,
-            carMake,
-            model,
-            typeOfCar,
-            color,
-            year,
+            _countryOrigin,
+            _regPlate,
+            _carMake,
+            _model,
+            _typeOfCar,
+            _color,
+            _year,
             0
         );
 
         usersCar[msg.sender] = newCar;
-        emit carAdded(currentUser, carMake, model);
+        emit carAdded(currentUser, _carMake, _model);
+    }
 
+    function getUser(address useraddy) external view returns (User memory){
+        return users[useraddy];
+    }
 
+    function getCar(address useraddy) external view returns (Car memory){
+        return usersCar[useraddy];
     }
 }
