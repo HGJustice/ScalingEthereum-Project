@@ -1,8 +1,8 @@
 pragma solidity 0.8.20;
 
-contract UserManagement{
+contract UserManagement {
     struct User {
-        uint id; 
+        uint id;
         string username;
         address userAddress;
         uint rating;
@@ -13,7 +13,6 @@ contract UserManagement{
 
     struct Car {
         uint id;
-        User owner;
         string countryOrigin;
         string registrationPlate;
         string carMake;
@@ -50,16 +49,21 @@ contract UserManagement{
         emit userCreated(msg.sender, userName);
     }
 
-    function addCarToUser(string memory _countryOrigin, string memory _regPlate, string memory _carMake, 
-         string memory _model, string memory _typeOfCar, string memory _color, uint _year) external 
-    {
+    function addCarToUser(
+        string memory _countryOrigin,
+        string memory _regPlate,
+        string memory _carMake,
+        string memory _model,
+        string memory _typeOfCar,
+        string memory _color,
+        uint _year
+    ) external {
         require(users[msg.sender].userCreated, "must create user first");
         currentCarID++;
 
-        User memory currentUser = users[msg.sender];
-        Car memory newCar = Car (
+        User storage currentUser = users[msg.sender];
+        Car memory newCar = Car(
             currentCarID,
-            currentUser,
             _countryOrigin,
             _regPlate,
             _carMake,
@@ -71,14 +75,15 @@ contract UserManagement{
         );
 
         usersCar[msg.sender] = newCar;
+        currentUser.hasCar = true;
         emit carAdded(currentUser, _carMake, _model);
     }
 
-    function getUser(address useraddy) external view returns (User memory){
+    function getUser(address useraddy) external view returns (User memory) {
         return users[useraddy];
     }
 
-    function getCar(address useraddy) external view returns (Car memory){
+    function getCar(address useraddy) external view returns (Car memory) {
         return usersCar[useraddy];
     }
 }

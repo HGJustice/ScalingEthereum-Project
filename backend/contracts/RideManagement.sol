@@ -4,41 +4,60 @@ import "contracts/UserManagement.sol";
 import "contracts/PriceFeed.sol";
 
 contract RideManagement {
-UserManagement public userContract;
-AggregatorV3Interface private priceFeed;
-using PriceConverter for uint256;
+    UserManagement public userContract;
+    AggregatorV3Interface private priceFeed;
+    using PriceConverter for uint256;
 
-struct Ride {
-    uint id;
-    string pickup;
-    string destination;
-    string date;
-    uint pickupTime;
-    uint numOfSeatsAvaiable;
-    uint price;
-    address[] passengers;
-}
+    struct Ride {
+        uint id;
+        string pickup;
+        string destination;
+        string date;
+        uint pickupTime;
+        uint numOfSeatsAvaiable;
+        uint price;
+        address[] passengers; // I was thinking of having a mapping here instead
+    }
 
-event ridePosted(address driver, string pickup, string destination, uint time);
-event seatBought(uint rideid, address buyer, string pickup, string destination, uint time);
+    event ridePosted(
+        address driver,
+        string pickup,
+        string destination,
+        uint time
+    );
+    event seatBought(
+        uint rideid,
+        address buyer,
+        string pickup,
+        string destination,
+        uint time
+    );
 
-mapping(address => Ride) usersRides;
-mapping(uint => Ride) rides;
-uint256 currentrideID = 0;
+    mapping(address => Ride) usersRides;
+    mapping(uint => Ride) rides;
+    uint256 currentrideID = 0;
 
-constructor(address userManagementAddy, address pricefeedAddy){
+    constructor(address userManagementAddy, address pricefeedAddy) {
         userContract = UserManagement(userManagementAddy);
         priceFeed = AggregatorV3Interface(pricefeedAddy);
-}
+    }
 
-function createRide(string memory _pickup, string memory _destination, string memory _date, 
-                    uint _time, uint _seats, uint _price) external 
-    {
-        require(userContract.getUser(address(msg.sender)).hasCar, "user needs car to post ride");
+    function createRide(
+        string memory _pickup,
+        string memory _destination,
+        string memory _date,
+        uint _time,
+        uint _seats,
+        uint _price
+    ) external {
+        require(
+            userContract.getUser(address(msg.sender)).hasCar,
+            "user needs car to post ride"
+        );
         currentrideID++;
 
         Ride memory newRide = Ride(
-            currentrideID, 
+            currentrideID,
             _pickup,
             _destination,
             _date,
@@ -57,21 +76,30 @@ function createRide(string memory _pickup, string memory _destination, string me
         require(chosenRide <= currentrideID, "chosen invalid ride");
 
         Ride storage currentRide = rides[chosenRide];
-        require(msg.value >= currentRide.price.getConversionRate(priceFeed), "pls send enough eth to cover ride");
         require(currentRide.numOfSeatsAvaiable > 0, "ride sold out");
+        require(
+            msg.value >= currentRide.price.getConversionRate(priceFeed),
+            "pls send enough eth to cover ride"
+        );
 
-        for(uint index = 0; index < currentRide.passengers.length; index++){
-            if(currentRide.passengers[index] == address(0)){
+        for (uint index = 0; index < currentRide.passengers.length; index++) {
+            if (currentRide.passengers[index] == address(0)) {
                 currentRide.passengers[index] = address(msg.sender);
                 break;
             }
         }
 
         currentRide.numOfSeatsAvaiable -= 1;
-        emit seatBought(chosenRide, msg.sender, currentRide.pickup, currentRide.destination, currentRide.pickupTime);
+        emit seatBought(
+            chosenRide,
+            msg.sender,
+            currentRide.pickup,
+            currentRide.destination,
+            currentRide.pickupTime
+        );
     }
 
-        function convertTest(uint amount) public view returns (uint256) {
+    function convertTest(uint amount) public view returns (uint256) {
         uint256 converted = amount.getConversionRate(priceFeed);
         return converted;
     }
