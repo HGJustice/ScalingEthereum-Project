@@ -1,37 +1,18 @@
-import "@particle-network/connect-react-ui/dist/index.css";
-import { ConnectButton } from "@particle-network/connect-react-ui";
+import { useAccount } from "@particle-network/connect-react-ui";
+import CustomConnectButton from "./Components/CustomConnectButton.js";
 
 export const App = () => {
+  const account = useAccount();
+
   return (
-    <ConnectButton.Custom>
-      {({ account, openAccountModal, openConnectModal, openChainModal }) => (
+    <div>
+      <CustomConnectButton />
+      {account && (
         <div>
-          {/* The connect button is always visible but disabled when there is an account */}
-          <button onClick={openConnectModal} disabled={!!account}>
-            Open Connect
-          </button>
-
-          {account && ( // This section will only render if `account` is truthy (i.e., the user is logged in)
-            <>
-              <br />
-              <br />
-              {/* Open Account button */}
-              <button onClick={openAccountModal}>Open Account</button>
-              <br />
-              <br />
-              {/* Open Switch Network button */}
-              <button onClick={openChainModal}>Open Switch Network</button>
-            </>
-          )}
-
-          {/* Displaying account information */}
-          <div>
-            <h3>Account</h3>
-            <p>{account || "Not logged in"}</p>
-          </div>
+          <p>hi</p>
         </div>
       )}
-    </ConnectButton.Custom>
+    </div>
   );
 };
 
