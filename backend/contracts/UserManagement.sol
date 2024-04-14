@@ -62,6 +62,8 @@ contract UserManagement {
         currentCarID++;
 
         User storage currentUser = users[msg.sender];
+        currentUser.hasCar = true;
+
         Car memory newCar = Car(
             currentCarID,
             _countryOrigin,
@@ -75,7 +77,6 @@ contract UserManagement {
         );
 
         usersCar[msg.sender] = newCar;
-        currentUser.hasCar = true;
         emit carAdded(currentUser, _carMake, _model);
     }
 

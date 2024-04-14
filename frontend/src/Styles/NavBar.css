@@ -1,0 +1,23 @@
+.header {
+  padding-top: 30px;
+}
+
+.navBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navBar__header {
+}
+
+.navBar__navigationLinks {
+  display: flex;
+  list-style-type: none;
+  gap: 15px;
+}
+
+.navBar__pageLink {
+  text-decoration: none;
+}

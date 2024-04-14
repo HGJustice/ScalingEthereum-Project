@@ -1,6 +1,6 @@
 import React from "react";
 import { ConnectButton } from "@particle-network/connect-react-ui";
-import "./Styles/ConnectCustomButton.css";
+import "../Styles/ConnectCustomButton.css";
 import "@particle-network/connect-react-ui/dist/index.css";
 
 export default function CustomConnectButton() {
@@ -22,7 +22,7 @@ export default function CustomConnectButton() {
               </button>
             )}
             {account && (
-              <div>
+              <div className="ConnectButton__options">
                 <button onClick={openAccountModal} disabled={!account}>
                   Open Account
                 </button>

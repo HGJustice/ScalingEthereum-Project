@@ -37,9 +37,11 @@ contract RideManagement {
     mapping(uint => Ride) rides;
     uint256 currentrideID = 0;
 
-    constructor(address userManagementAddy, address pricefeedAddy) {
+    constructor(address userManagementAddy) {
         userContract = UserManagement(userManagementAddy);
-        priceFeed = AggregatorV3Interface(pricefeedAddy);
+        priceFeed = AggregatorV3Interface(
+            0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165
+        );
     }
 
     function createRide(

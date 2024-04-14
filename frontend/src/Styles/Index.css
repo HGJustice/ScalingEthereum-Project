@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: "Montserrat";
+}
+
+.App__searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 150px;
+}
+
+.App__BookRide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 150px;
+}
+
+.App__createUser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+}
