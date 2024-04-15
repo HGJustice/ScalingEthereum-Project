@@ -1,5 +1,5 @@
 import React from "react";
-import CustomConnectButton from "./CustomConnectButton";
+import CustomConnectButton from "./CustomConnectButton.js";
 import "../Styles/NavBar.css";
 export default function Header() {
   return (

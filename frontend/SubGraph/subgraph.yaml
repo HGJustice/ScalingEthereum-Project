@@ -1,0 +1,29 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: UserManagment
+    network: arbitrum-sepolia
+    source:
+      address: "0xEF15A3F93E8D281afbb727928882A62Ceb0f6aa8"
+      abi: UserManagment
+      startBlock: 33978163
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - carAdded
+        - userCreated
+      abis:
+        - name: UserManagment
+          file: ./abis/UserManagment.json
+      eventHandlers:
+        - event: carAdded(address,string,string)
+          handler: handlecarAdded
+        - event: userCreated(address,string)
+          handler: handleuserCreated
+      file: ./src/user-managment.ts

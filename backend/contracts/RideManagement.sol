@@ -1,5 +1,5 @@
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
-
 import "contracts/UserManagement.sol";
 import "contracts/PriceFeed.sol";
 
@@ -13,29 +13,35 @@ contract RideManagement {
         string pickup;
         string destination;
         string date;
-        uint pickupTime;
+        string pickupTime;
         uint numOfSeatsAvaiable;
         uint price;
         address[] passengers; // I was thinking of having a mapping here instead
     }
 
     event ridePosted(
-        address driver,
+        uint rideid,
         string pickup,
         string destination,
-        uint time
+        string date,
+        string time,
+        uint passengers,
+        uint price,
+        address driver
     );
     event seatBought(
         uint rideid,
         address buyer,
         string pickup,
         string destination,
-        uint time
+        string time,
+        uint seatsAvaiable,
+        address[] currentPassengers
     );
 
-    mapping(address => Ride) usersRides;
-    mapping(uint => Ride) rides;
-    uint256 currentrideID = 0;
+    mapping(address => Ride) public usersRides;
+    mapping(uint => Ride) public rides;
+    uint256 public currentrideID = 0;
 
     constructor(address userManagementAddy) {
         userContract = UserManagement(userManagementAddy);
@@ -48,7 +54,7 @@ contract RideManagement {
         string memory _pickup,
         string memory _destination,
         string memory _date,
-        uint _time,
+        string memory _time,
         uint _seats,
         uint _price
     ) external {
@@ -71,7 +77,16 @@ contract RideManagement {
 
         usersRides[msg.sender] = newRide;
         rides[currentrideID] = newRide;
-        emit ridePosted(msg.sender, _pickup, _destination, _time);
+        emit ridePosted(
+            currentrideID,
+            _pickup,
+            _destination,
+            _date,
+            _time,
+            _seats,
+            _price,
+            msg.sender
+        );
     }
 
     function BuyRide(uint chosenRide) external payable {
@@ -97,7 +112,9 @@ contract RideManagement {
             msg.sender,
             currentRide.pickup,
             currentRide.destination,
-            currentRide.pickupTime
+            currentRide.pickupTime,
+            currentRide.numOfSeatsAvaiable,
+            currentRide.passengers
         );
     }
 

@@ -1,0 +1,18 @@
+type carAdded @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  carMake: String! # string
+  model: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type userCreated @entity(immutable: true) {
+  id: Bytes!
+  userAddy: Bytes! # address
+  username: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

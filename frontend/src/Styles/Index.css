@@ -27,3 +27,10 @@ body {
   justify-content: center;
   padding-top: 100px;
 }
+
+.Add__addCar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+}
