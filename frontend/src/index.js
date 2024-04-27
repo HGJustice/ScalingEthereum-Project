@@ -3,7 +3,11 @@ import ReactDOM from "react-dom/client";
 import App from "./App.js";
 import { ModalProvider } from "@particle-network/connect-react-ui";
 import { WalletEntryPosition } from "@particle-network/auth";
-import { Ethereum, ArbitrumSepolia } from "@particle-network/chains";
+import {
+  Ethereum,
+  ArbitrumSepolia,
+  ScrollSepolia,
+} from "@particle-network/chains";
 import { evmWallets } from "@particle-network/connect";
 
 const projectId = process.env.REACT_APP_PROJECT_ID;
@@ -18,12 +22,12 @@ root.render(
         projectId: projectId,
         clientKey: clientKey,
         appId: appId,
-        chains: [Ethereum, ArbitrumSepolia],
+        chains: [Ethereum, ArbitrumSepolia, ScrollSepolia],
         particleWalletEntry: {
           //optional: particle wallet config
           displayWalletEntry: true, //display wallet button when connect particle success.
           defaultWalletEntryPosition: WalletEntryPosition.BR,
-          supportChains: [Ethereum, ArbitrumSepolia],
+          supportChains: [Ethereum, ArbitrumSepolia, ScrollSepolia],
           customStyle: {}, //optional: custom wallet style
         },
         securityAccount: {

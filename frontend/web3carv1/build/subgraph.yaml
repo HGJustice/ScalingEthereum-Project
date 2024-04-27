@@ -2,7 +2,7 @@ specVersion: 1.0.0
 indexerHints:
   prune: auto
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: UserManagement
@@ -20,13 +20,13 @@ dataSources:
         - userCreated
       abis:
         - name: UserManagement
-          file: ./abis/UserManagement.json
+          file: UserManagement/abis/UserManagement.json
       eventHandlers:
         - event: carAdded(address,string,string)
           handler: handlecarAdded
         - event: userCreated(address,string)
           handler: handleuserCreated
-      file: ./src/user-management.ts
+      file: UserManagement/UserManagement.wasm
   - kind: ethereum
     name: RideManegement
     network: arbitrum-sepolia
@@ -43,10 +43,10 @@ dataSources:
         - seatBought
       abis:
         - name: RideManegement
-          file: ./abis/RideManegement.json
+          file: RideManegement/abis/RideManegement.json
       eventHandlers:
         - event: ridePosted(uint256,string,string,string,string,uint256,uint256,address)
           handler: handleridePosted
         - event: seatBought(uint256,address,string,string,string,uint256,address[])
           handler: handleseatBought
-      file: ./src/ride-manegement.ts
+      file: RideManegement/RideManegement.wasm

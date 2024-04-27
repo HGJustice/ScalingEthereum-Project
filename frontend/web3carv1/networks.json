@@ -3,6 +3,9 @@
     "UserManagement": {
       "address": "0xEF15A3F93E8D281afbb727928882A62Ceb0f6aa8",
       "startBlock": 33978163
+    },
+    "RideManegement": {
+      "address": "0x16b4Be50A03a1EBaA6fa8BE3c7b806D9962be4be"
     }
   }
 }
