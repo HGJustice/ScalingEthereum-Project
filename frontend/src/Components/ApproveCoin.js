@@ -4,7 +4,7 @@ import ABI from "../ABI3.json";
 
 const contractABI = ABI;
 
-const contractAddress = "0x8a5976304e42097e389ddB7F541dA3c1DCD6f213";
+const contractAddress = " 0xA62034dd40A4B0a72Fe0D8befa7d1ECb43338fF2";
 
 function ApproveCoin() {
   const [formData, setFormData] = useState({
