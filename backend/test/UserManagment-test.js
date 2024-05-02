@@ -1,4 +1,4 @@
-const { expect } = require('chai'); //import chai library for testing
+const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
 describe('User Managment contract tests', function () {
@@ -30,7 +30,7 @@ describe('User Managment contract tests', function () {
 
       const retrievedUser = await userManagmentDeployed.getUser(owner.address);
 
-      expect(retrievedUser.name).to.equal(userName);
+      expect(retrievedUser.username).to.equal(userName);
       expect(retrievedUser.userCreated).to.be.true;
     });
     it('it should emit an event once register function completes', async function () {
